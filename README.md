@@ -33,7 +33,6 @@ This repository contains the ReStock product portfolio, interactive product prot
 </table>
 # Case Study
 
-**Case Study No.:** 78  
 **Case:** Retail Stockout Alert Service  
 **Topic:** Digital Transformation — Inventory  
 **Product:** ReStock
