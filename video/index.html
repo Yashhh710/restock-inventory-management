@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="https://img.icons8.com/?size=100&id=Jl4RFd9wbcRM&format=png&color=000000">
+<title>ScrewFast — How It Works</title>
+<style>
+  :root{
+    --bg: #0b0b0d;
+    --panel: #16161a;
+    --panel-2: #1c1c21;
+    --line: #2a2a30;
+    --yellow: #f5b400;
+    --yellow-dim: #cf9c00;
+    --text: #f4f4f5;
+    --text-dim: #9a9aa2;
+    --text-dimmer: #6c6c74;
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{color:inherit;text-decoration:none;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:40px 48px 32px;}
+  .crumb{font-size:13.5px;color:var(--yellow);font-weight:600;margin-bottom:18px;}
+  .crumb span{color:var(--yellow-dim);opacity:.65;}
+  .hero-grid{display:grid;grid-template-columns:1.1fr 0.7fr;gap:40px;align-items:center;}
+  h1{font-size:46px;line-height:1.08;font-weight:800;letter-spacing:-0.02em;margin:0 0 18px;}
+  h1 .accent{color:var(--yellow);}
+  .hero-sub{color:var(--text-dim);font-size:16px;line-height:1.6;max-width:480px;margin:0 0 28px;}
+  .stat-row{display:flex;gap:14px;flex-wrap:wrap;}
+  .stat-pill{
+    display:flex;align-items:center;gap:10px;
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:var(--radius-sm);padding:12px 18px;
+  }
+  .stat-pill svg{color:var(--yellow);flex-shrink:0;}
+  .stat-pill .label{font-size:12px;color:var(--text-dimmer);display:block;}
+  .stat-pill .value{font-size:14.5px;font-weight:700;}
+  .hero-art{position:relative;height:320px;}
+  .box-art{position:absolute;inset:0;}
+
+  /* ---------- LAYOUT: player + chapters ---------- */
+  .content-grid{
+    display:grid;grid-template-columns:1fr 380px;gap:24px;padding:0 48px 48px;align-items:start;
+  }
+
+  /* ---------- PLAYER ---------- */
+  .player-card{
+    background:#000;border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;position:relative;
+  }
+  .player-stage{
+    position:relative;width:100%;aspect-ratio:16/9;
+    background:
+      radial-gradient(ellipse at 30% 20%, rgba(245,180,0,0.10), transparent 55%),
+      linear-gradient(135deg,#0d0d10 0%, #08080a 100%);
+    overflow:hidden;
+  }
+  #ytFrame{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:1;background:#000;}
+  .watch-link{
+    display:inline-flex;align-items:center;gap:6px;color:var(--text-dim);font-size:12.5px;
+    white-space:nowrap;
+  }
+  .watch-link:hover{color:var(--yellow);}
+  .grid-lines{position:absolute;inset:0;opacity:.35;
+    background-image:
+      linear-gradient(rgba(245,180,0,0.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245,180,0,0.08) 1px, transparent 1px);
+    background-size:32px 32px;
+    mask-image: radial-gradient(ellipse at 70% 50%, black 10%, transparent 70%);
+  }
+  .overlay{
+    position:absolute;inset:0;z-index:3;cursor:pointer;user-select:none;
+    transition:opacity .25s ease;
+  }
+  .overlay.hidden{opacity:0;pointer-events:none;}
+  .stage-logo{position:absolute;top:28px;left:32px;font-weight:800;font-size:20px;z-index:3;}
+  .stage-logo .dots{color:var(--yellow);font-size:10px;letter-spacing:2px;display:block;}
+  .stage-title{position:absolute;left:32px;bottom:78px;z-index:3;}
+  .stage-title h2{font-size:clamp(28px,4vw,44px);margin:0;font-weight:800;letter-spacing:-0.02em;}
+  .stage-title h2 .accent{color:var(--yellow);}
+  .stage-title p{margin:6px 0 0;color:var(--text-dim);font-size:clamp(14px,1.6vw,18px);}
+  .exploded{
+    position:absolute;right:8%;top:50%;transform:translateY(-50%);
+    width:min(34%, 220px);
+    filter:drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+    animation:hover-float 5s ease-in-out infinite;z-index:2;
+  }
+  @keyframes hover-float{
+    0%,100%{transform:translateY(-52%) rotate(-1deg);}
+    50%{transform:translateY(-48%) rotate(1deg);}
+  }
+  .center-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;}
+  .center-play-btn{
+    width:76px;height:76px;border-radius:50%;
+    background:var(--yellow);color:#100c00;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 24px rgba(245,180,0,0.35);transition:transform .15s;
+  }
+  .center-play-btn:hover{transform:scale(1.06);}
+
+  .scrub-fill-wrap{position:absolute;left:0;right:0;bottom:0;height:4px;z-index:5;background:rgba(255,255,255,0.12);}
+  .scrub-fill{height:100%;background:var(--yellow);width:0%;}
+
+  .controls-bar{
+    background:#0a0a0c;border-top:1px solid var(--line);
+    padding:14px 20px;display:flex;align-items:center;gap:16px;position:relative;z-index:5;
+  }
+  .full-controls{display:flex;flex-direction:column;gap:10px;width:100%;}
+  .progress-track{position:relative;flex:1;height:4px;background:var(--line);border-radius:4px;cursor:pointer;margin:0 4px;}
+  .progress-fill{position:absolute;left:0;top:0;height:100%;background:var(--yellow);border-radius:4px;width:0%;}
+  .progress-handle{
+    position:absolute;top:50%;width:12px;height:12px;border-radius:50%;background:var(--yellow);
+    transform:translate(-50%,-50%);left:0%;box-shadow:0 0 0 4px rgba(245,180,0,0.18);
+  }
+  .btn-row{display:flex;align-items:center;gap:14px;}
+  .ctrl-btn{
+    width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+    color:var(--text-dim);cursor:pointer;transition:.15s;flex-shrink:0;background:transparent;border:none;
+  }
+  .ctrl-btn:hover{color:var(--yellow);background:rgba(245,180,0,0.08);}
+  .time-display{font-size:13px;color:var(--text-dim);white-space:nowrap;font-variant-numeric:tabular-nums;}
+  .spacer{flex:1;}
+  .vol-group{display:flex;align-items:center;gap:6px;}
+  .vol-slider{width:70px;height:3px;background:var(--line);border-radius:3px;position:relative;cursor:pointer;}
+  .vol-fill{position:absolute;left:0;top:0;height:100%;background:var(--text-dim);border-radius:3px;width:70%;}
+
+  /* ---------- BELOW PLAYER CARDS ---------- */
+  .below-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:20px;}
+  .info-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px;}
+  .info-card .icon-wrap{
+    width:38px;height:38px;border-radius:8px;background:rgba(245,180,0,0.1);
+    display:flex;align-items:center;justify-content:center;color:var(--yellow);margin-bottom:12px;
+  }
+  .info-card h3{font-size:15px;margin:0 0 6px;font-weight:700;}
+  .info-card p{font-size:13.5px;color:var(--text-dim);line-height:1.5;margin:0 0 14px;}
+  .card-btn{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--yellow);color:#100c00;font-weight:700;font-size:13.5px;
+    padding:9px 14px;border-radius:8px;border:none;cursor:pointer;
+  }
+
+  /* ---------- CHAPTERS ---------- */
+  .chapters-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;}
+  .chapters-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;font-weight:700;font-size:15px;}
+  .chapters-head svg{color:var(--yellow);}
+  .chapters-list{max-height:640px;overflow-y:auto;}
+  .chapters-list::-webkit-scrollbar{width:6px;}
+  .chapters-list::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px;}
+  .chapter-item{display:flex;align-items:center;gap:14px;padding:14px 20px;border-bottom:1px solid var(--line);cursor:pointer;transition:background .15s;}
+  .chapter-item:last-child{border-bottom:none;}
+  .chapter-item:hover{background:rgba(255,255,255,0.03);}
+  .chapter-item.active{background:rgba(245,180,0,0.08);}
+  .chapter-num{
+    width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;color:var(--text-dim);background:var(--panel-2);border:1px solid var(--line);
+  }
+  .chapter-item.active .chapter-num{background:var(--yellow);color:#100c00;border-color:var(--yellow);}
+  .chapter-item.playing .chapter-num{display:none;}
+  .chapter-item.playing .chapter-play-icon{
+    width:30px;height:30px;border-radius:50%;background:var(--yellow);color:#100c00;
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .chapter-play-icon{display:none;}
+  .chapter-text{flex:1;min-width:0;}
+  .chapter-text .t{font-size:14px;font-weight:600;margin:0 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chapter-item.active .chapter-text .t{color:var(--yellow);}
+  .chapter-text .d{font-size:12.5px;color:var(--text-dimmer);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chapter-dur{font-size:12.5px;color:var(--text-dimmer);flex-shrink:0;font-variant-numeric:tabular-nums;}
+  .chapter-item.active .chapter-dur{color:var(--text-dim);}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:1180px){
+    .content-grid{grid-template-columns:1fr;}
+    .below-cards{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:1000px){
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-art{display:none;}
+  }
+  @media (max-width:800px){
+    .hero{padding:28px 20px 20px;}
+    .content-grid{padding:0 20px 32px;gap:20px;}
+    h1{font-size:32px;}
+    .stat-row{gap:10px;}
+    .stat-pill{padding:10px 12px;flex:1 1 auto;}
+    .stat-pill .value{font-size:13px;}
+    .below-cards{grid-template-columns:1fr;}
+    .stage-title{left:20px;bottom:66px;}
+    .stage-title p{display:none;}
+    .exploded{display:none;}
+    .stage-logo{top:18px;left:20px;font-size:16px;}
+    .controls-bar{padding:10px 12px;flex-wrap:wrap;}
+    .time-display{font-size:11.5px;}
+    .ctrl-btn{width:32px;height:32px;}
+    .vol-group{display:none;}
+    .chapters-list{max-height:420px;}
+  }
+  @media (max-width:420px){
+    h1{font-size:26px;}
+    .stat-row{flex-direction:column;}
+  }
+  :focus-visible{outline:2px solid var(--yellow);outline-offset:2px;}
+</style>
+</head>
+<body>
+<section class="hero">
+  <p class="crumb">Tutorials <span>/ How It Works</span></p>
+  <div class="hero-grid">
+    <div>
+      <h1>Step-by-Step Tutorial<br>How <span class="accent">ScrewFast</span> Works</h1>
+      <p class="hero-sub">Watch the complete tutorial to understand how ScrewFast products are designed and used for maximum efficiency.</p>
+      <div class="stat-row">
+        <div class="stat-pill">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <span><span class="label">Total Duration</span><span class="value" id="totalDurLabel">08:45</span></span>
+        </div>
+        <div class="stat-pill">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+          <span><span class="label">Steps</span><span class="value">10 Easy Steps</span></span>
+        </div>
+        <div class="stat-pill">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+          <span><span class="label">Level</span><span class="value">Beginner Friendly</span></span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="box-art">
+        <svg viewBox="0 0 400 320" width="100%" height="100%">
+          <g transform="translate(10,20) rotate(-6)">
+            <rect x="0" y="60" width="180" height="200" rx="6" fill="#141416" stroke="#2a2a30"/>
+            <text x="90" y="185" fill="#8a8a90" font-size="13" text-anchor="middle" transform="rotate(-90 90 185)">SF-BN B203</text>
+            <circle cx="90" cy="110" r="26" fill="none" stroke="#3a3a40" stroke-width="3"/>
+            <circle cx="90" cy="150" r="22" fill="none" stroke="#3a3a40" stroke-width="3"/>
+            <circle cx="90" cy="150" r="10" fill="none" stroke="#3a3a40" stroke-width="3"/>
+          </g>
+          <g transform="translate(160,50) rotate(4)">
+            <rect x="0" y="60" width="200" height="210" rx="6" fill="#f5b400"/>
+            <text x="20" y="100" fill="#100c00" font-size="20" font-weight="800">Screw</text>
+            <text x="20" y="122" fill="#100c00" font-size="20" font-weight="800">Fast</text>
+            <text x="20" y="240" fill="#100c00" font-size="15" font-weight="800">SF-BN</text>
+            <text x="20" y="260" fill="#100c00" font-size="22" font-weight="800">B203</text>
+            <circle cx="150" cy="150" r="30" fill="none" stroke="#100c00" stroke-width="3" opacity="0.6"/>
+            <circle cx="150" cy="190" r="24" fill="none" stroke="#100c00" stroke-width="3" opacity="0.6"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="content-grid">
+  <div>
+    <div class="player-card">
+      <div class="player-stage">
+        <div id="ytFrame"></div>
+
+        <div class="overlay" id="overlay">
+          <div class="grid-lines"></div>
+          <div class="stage-logo">Screw<br>Fast<span class="dots">••••••</span></div>
+          <div class="stage-title">
+            <h2>How It <span class="accent">Works</span></h2>
+            <p>Step-by-Step Guide</p>
+          </div>
+          <div class="center-play">
+            <div class="center-play-btn" id="centerPlayBtn">
+              <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="scrub-fill-wrap"><div class="scrub-fill" id="scrubFill"></div></div>
+      </div>
+
+      <div class="controls-bar">
+        <div class="full-controls">
+          <div class="btn-row">
+            <span class="time-display" id="chapterLabel">1. Introduction</span>
+            <span class="spacer"></span>
+            <a class="watch-link" id="watchLink" href="https://youtu.be/tlkb3cLfaOQ" target="_blank" rel="noopener">
+              Watch on YouTube
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg>
+            </a>
+            <button class="ctrl-btn" id="fsBtn" aria-label="Fullscreen">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="chapters-card">
+    <div class="chapters-head">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      Tutorial Chapters
+    </div>
+    <div class="chapters-list" id="chaptersList"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // 10 chapters mapped in pairs to 5 real YouTube videos.
+  const videoIds = ["tlkb3cLfaOQ","cL0KKSPjZf8","IAONd2d_PDU","GG1_DsScm6U","oafxkMv4xnc"];
+
+  const chapters = [
+    {title:"1. Introduction", desc:"Overview of ScrewFast", dur:45},
+    {title:"2. Product Overview", desc:"Know your components", dur:70},
+    {title:"3. Unboxing", desc:"What's inside the box?", dur:65},
+    {title:"4. Key Features", desc:"Features that make a difference", dur:80},
+    {title:"5. How It Works", desc:"Step-by-step working process", dur:120},
+    {title:"6. Installation Guide", desc:"Easy installation steps", dur:90},
+    {title:"7. Best Practices", desc:"Tips for maximum performance", dur:55},
+    {title:"8. Applications", desc:"Where you can use it", dur:55},
+    {title:"9. Maintenance Tips", desc:"Keep your tools in best condition", dur:40},
+    {title:"10. Conclusion", desc:"Final thoughts & next steps", dur:25},
+  ];
+
+  function fmt(s){
+    s = Math.max(0, Math.round(s||0));
+    const m = Math.floor(s/60), sec = s%60;
+    return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+  }
+  const totalListed = chapters.reduce((a,c)=>a+c.dur,0);
+  document.getElementById('totalDurLabel').textContent = fmt(totalListed);
+
+  const listEl = document.getElementById('chaptersList');
+  chapters.forEach((c, i) => {
+    const el = document.createElement('div');
+    el.className = 'chapter-item';
+    el.dataset.index = i;
+    el.innerHTML = `
+      <div class="chapter-num">${i+1}</div>
+      <div class="chapter-play-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="chapter-text">
+        <p class="t">${c.title}</p>
+        <p class="d">${c.desc}</p>
+      </div>
+      <div class="chapter-dur">${fmt(c.dur)}</div>
+    `;
+    el.addEventListener('click', () => loadChapter(i));
+    listEl.appendChild(el);
+  });
+  const chapterEls = Array.from(listEl.children);
+
+  const overlay = document.getElementById('overlay');
+  const centerPlayBtn = document.getElementById('centerPlayBtn');
+  const ytFrame = document.getElementById('ytFrame');
+  const chapterLabel = document.getElementById('chapterLabel');
+  const watchLink = document.getElementById('watchLink');
+  const fsBtn = document.getElementById('fsBtn');
+  const playerCard = document.querySelector('.player-card');
+
+  let activeChapterIndex = 0;
+
+  function setActiveChapter(i){
+    activeChapterIndex = i;
+    chapterEls.forEach((el, idx) => el.classList.toggle('active', idx === i));
+    const el = chapterEls[i];
+    const listBox = listEl.getBoundingClientRect();
+    const elBox = el.getBoundingClientRect();
+    if(elBox.top < listBox.top || elBox.bottom > listBox.bottom){
+      el.scrollIntoView({block:'nearest', behavior:'smooth'});
+    }
+    chapterLabel.textContent = chapters[i].title;
+    const groupIndex = Math.floor(i/2);
+    watchLink.href = 'https://youtu.be/' + videoIds[groupIndex];
+  }
+
+  function loadChapter(i){
+    setActiveChapter(i);
+    const groupIndex = Math.floor(i/2);
+    const id = videoIds[groupIndex];
+    // Build a plain iframe embed. This is the reliable, standards-based way
+    // to play a YouTube video and doesn't depend on cross-origin scripting,
+    // so it keeps working even when opened straight from a local file.
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
+    iframe.title = chapters[i].title;
+    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.setAttribute('frameborder','0');
+    iframe.style.position = 'absolute';
+    iframe.style.inset = '0';
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    iframe.style.border = '0';
+    ytFrame.innerHTML = '';
+    ytFrame.appendChild(iframe);
+    overlay.classList.add('hidden');
+  }
+
+  overlay.addEventListener('click', () => loadChapter(activeChapterIndex));
+  centerPlayBtn.addEventListener('click', (e) => { e.stopPropagation(); loadChapter(activeChapterIndex); });
+
+  fsBtn.addEventListener('click', () => {
+    if(!document.fullscreenElement){ playerCard.requestFullscreen().catch(()=>{}); }
+    else { document.exitFullscreen(); }
+  });
+
+  setActiveChapter(0);
+})();
+
+document.getElementById('backBtn').addEventListener('click', function() {
+        window.close();
+        setTimeout(function() {
+            window.history.back();
+        }, 100);
+    });
+
+</script>
+</body>
+</html>

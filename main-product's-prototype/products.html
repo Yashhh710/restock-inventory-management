@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Products — ReStock</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('restock-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="style.css"></head>
+<body data-page="products" data-title="Products" data-sub="Manage products, stock levels, categories, and suppliers.">
+<aside id="side" aria-label="Sidebar"></aside><div class="veil" id="veil"></div>
+<main id="main" class="loading"><header id="hdr"></header>
+<div class="tb"><input id="ps" type="search" placeholder="Search products…" aria-label="Search products" style="min-width:220px"><select id="pc" aria-label="Category"><option value="">All categories</option><option>Food</option><option>Beverages</option><option>Groceries</option><option>Snacks</option><option>Personal Care</option><option>Pharmacy</option><option>Household</option></select><select id="pf" aria-label="Stock status"><option value="">All statuses</option><option value="ok">Healthy</option><option value="low">Low Stock</option><option value="out">Out of Stock</option></select><span class="sp"></span><button class="btn p" data-act="add">+ Add Product</button></div><section class="grid g4" id="pk" aria-label="Key metrics"></section><section class="card mb"><div class="ch"><div><h3>Product Inventory</h3><p>Every tracked product with live stock status.</p></div></div><div class="tw"><table style="min-width:900px"><thead><tr><th>Product</th><th>SKU</th><th>Category</th><th>Stock</th><th>Reorder Level</th><th>Supplier</th><th>Status</th><th>Actions</th></tr></thead><tbody id="pt"></tbody></table></div><div id="pte"></div></section>
+<footer><span>ReStock — Retail Inventory Management</span><span>Academic Project — ITM Skills University</span></footer></main>
+<div class="ov" id="ov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="mt" id="md"></div></div><div id="toasts" aria-live="polite"></div>
+<script src="app.js"></script></body></html>

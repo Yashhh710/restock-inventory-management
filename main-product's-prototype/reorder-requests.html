@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reorder Requests — ReStock</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('restock-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="style.css"></head>
+<body data-page="reorder-requests" data-title="Reorder Requests" data-sub="Manage products that need replenishment.">
+<aside id="side" aria-label="Sidebar"></aside><div class="veil" id="veil"></div>
+<main id="main" class="loading"><header id="hdr"></header>
+<div class="tb"><span class="sp"></span><button class="btn p" data-act="pick">+ Create Order</button></div><section class="grid g3" id="rk" aria-label="Key metrics"></section><section class="card mb"><div class="ch"><div><h3>Requests</h3><p>Marking a request Received adds the units to stock.</p></div></div><div class="tw"><table style="min-width:860px"><thead><tr><th>Product</th><th>Supplier</th><th>Current Stock</th><th>Suggested Quantity</th><th>Status</th><th>Date</th><th>Action</th></tr></thead><tbody id="rt"></tbody></table></div><p class="note">KPI totals include earlier demo requests that are not itemised in this table.</p></section>
+<footer><span>ReStock — Retail Inventory Management</span><span>Academic Project — ITM Skills University</span></footer></main>
+<div class="ov" id="ov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="mt" id="md"></div></div><div id="toasts" aria-live="polite"></div>
+<script src="app.js"></script></body></html>

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Purchases — ReStock</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('restock-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="style.css"></head>
+<body data-page="purchases" data-title="Purchases" data-sub="Record incoming inventory and supplier purchases.">
+<aside id="side" aria-label="Sidebar"></aside><div class="veil" id="veil"></div>
+<main id="main" class="loading"><header id="hdr"></header>
+<div class="tb"><span class="sp"></span><button class="btn p" data-act="pur">+ Record Purchase</button></div><section class="grid g4" id="uk" aria-label="Key metrics"></section><section class="grid g2b"><div class="card " ><div class="ch"><div><h3>Recent Purchases</h3><p>Stock received from suppliers.</p></div></div><div class="tw"><table style="min-width:720px"><thead><tr><th>Date</th><th>Product</th><th>Supplier</th><th>Quantity</th><th>Price</th><th>Total</th><th>Status</th></tr></thead><tbody id="pu"></tbody></table></div></div><div class="card " ><div class="ch"><div><h3>Spend by Supplier</h3><p>Total purchase value recorded.</p></div></div><div class="hb" id="psp"></div></div></section>
+<footer><span>ReStock — Retail Inventory Management</span><span>Academic Project — ITM Skills University</span></footer></main>
+<div class="ov" id="ov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="mt" id="md"></div></div><div id="toasts" aria-live="polite"></div>
+<script src="app.js"></script></body></html>

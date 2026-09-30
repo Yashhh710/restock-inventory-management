@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stock History — ReStock</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('restock-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="style.css"></head>
+<body data-page="stock-history" data-title="Stock History" data-sub="Track every inventory movement.">
+<aside id="side" aria-label="Sidebar"></aside><div class="veil" id="veil"></div>
+<main id="main" class="loading"><header id="hdr"></header>
+<div class="tb"><select id="hp" aria-label="Product"></select><select id="ht" aria-label="Movement type"><option value="">All movement types</option><option>Sale</option><option>Purchase</option><option>Adjustment</option><option>Stock Received</option></select><input id="hd" type="date" aria-label="Date"></div><section class="grid g4" id="hk" aria-label="Key metrics"></section><section class="card mb"><div class="ch"><div><h3>Movement Log</h3><p>Green is stock in, amber is stock out.</p></div></div><div class="tw"><table style="min-width:760px"><thead><tr><th>Date</th><th>Product</th><th>Movement</th><th>Quantity</th><th>Previous Stock</th><th>New Stock</th><th>Reference</th></tr></thead><tbody id="htb"></tbody></table></div></section>
+<footer><span>ReStock — Retail Inventory Management</span><span>Academic Project — ITM Skills University</span></footer></main>
+<div class="ov" id="ov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="mt" id="md"></div></div><div id="toasts" aria-live="polite"></div>
+<script src="app.js"></script></body></html>

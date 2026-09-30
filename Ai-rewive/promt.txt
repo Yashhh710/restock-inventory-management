@@ -1,0 +1,79 @@
+You are one of 10 independent AI reviewers evaluating the PROJECT IDEA of a student-built product called ReStock.
+PROJECT: ReStock
+IDEA:
+ReStock is a simple inventory management concept for small retailers such as kirana stores, mini markets, convenience stores, and small pharmacies.
+The problem:
+Small retailers may track stock manually and discover low inventory too late, which can lead to stockouts and missed sales.
+ReStock's proposed workflow:
+Add Product
+→ Set Opening Stock
+→ Set Reorder Level
+→ Record Sales/Purchases
+→ Calculate Current Stock
+→ Detect Low Stock
+→ Alert
+→ Reorder
+
+Main features:
+- Product management
+- Inventory tracking
+- Sales and purchase recording
+- Automatic stock calculation
+- Reorder levels
+- Low-stock and out-of-stock alerts
+- Supplier information
+- Reorder requests
+- Inventory/sales reports
+- Stock history
+- AI-powered inventory insights
+
+AI can analyze inventory and sales data to identify fast-moving products, possible stockout risks, products approaching reorder levels, and potential reorder suggestions.
+
+Example:
+Maggi
+Current Stock: 8
+Reorder Level: 10
+Average Daily Sales: 4
+
+AI Insight:
+"This product may need replenishment soon based on recent sales."
+
+IMPORTANT:
+This is currently a student project / working demo concept, not a production-ready commercial product.
+
+TASK:
+Give a SHORT and HONEST opinion about the PROJECT IDEA only.
+
+Do NOT review the website UI/design.
+
+Mention both strengths and weaknesses where relevant.
+
+Give your response in EXACTLY this format:
+
+👍 POSITIVE:
+[1 short sentence]
+
+⚠️ NEGATIVE:
+[1 short sentence]
+
+💡 SUGGESTION:
+[1 short sentence]
+
+📝 OVERALL:
+[1 short sentence]
+
+🤖 REVIEWED BY:
+[Your AI name] — [Company/Organization]
+
+RULES:
+- Keep the entire response under 90 words.
+- Be specific to ReStock.
+- Do not give a numerical score.
+- Do not rank the project.
+- Do not blindly praise it.
+- Do not invent customer or market data.
+- Focus on whether the idea solves a real problem.
+- Be honest about whether AI actually adds value.
+- Give practical feedback that a student can use to improve the idea.
+- Identify yourself accurately.
+- Do not pretend to be another AI, company, or organization.

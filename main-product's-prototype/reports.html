@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reports & Analytics — ReStock</title>
+<script>try{document.documentElement.dataset.theme=localStorage.getItem('restock-theme')||'dark'}catch(e){document.documentElement.dataset.theme='dark'}</script>
+<link rel="stylesheet" href="style.css"></head>
+<body data-page="reports" data-title="Reports &amp; Analytics" data-sub="Understand sales, stock movement, and inventory performance.">
+<aside id="side" aria-label="Sidebar"></aside><div class="veil" id="veil"></div>
+<main id="main" class="loading"><header id="hdr"></header>
+<div class="tb"><div class="seg" id="seg"><button data-r="7" class="on">7 Days</button><button data-r="30">30 Days</button><button data-r="90">90 Days</button></div></div><section class="grid g2"><div class="card " ><div class="ch"><div><h3>Sales Overview</h3><p>Track your recent sales performance.</p></div></div><div class="stats" id="sstats"></div><div class="cw" id="cw"></div></div><div class="card " ><div class="ch"><div><h3>Inventory Health</h3><p>Share of catalogue by stock status.</p></div></div><div id="health"></div></div></section><section class="grid g2c"><div class="card " ><div class="ch"><div><h3>Stock Movement</h3><p>Stock in versus stock out.</p></div></div><div class="mv" id="mv"></div><div id="mvc" style="margin-top:14px"></div></div><div class="card " ><div class="ch"><div><h3>Top Selling Products</h3><p>Units sold this month.</p></div></div><div class="hb" id="top"></div></div></section><div class="card mb" ><div class="ch"><div><h3>Low Stock Trend</h3><p>Products at or below reorder level, last 7 days.</p></div></div><div id="lst"></div></div>
+<footer><span>ReStock — Retail Inventory Management</span><span>Academic Project — ITM Skills University</span></footer></main>
+<div class="ov" id="ov"><div class="md" role="dialog" aria-modal="true" aria-labelledby="mt" id="md"></div></div><div id="toasts" aria-live="polite"></div>
+<script src="app.js"></script></body></html>
