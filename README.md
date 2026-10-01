@@ -1,5 +1,20 @@
 # ReStock — Retail Inventory Management
 
+<table align="center">
+  <tr>
+    <th align="center">Product Portfolio</th>
+    <th align="center">Product Prototype</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img width="300" height="300" alt="Product Portfolio" src="https://github.com/user-attachments/assets/8fa32d47-4502-4380-8eb9-7193fb48f317" />
+    </td>
+    <td align="center">
+      <img width="300" height="300" alt="Product Prototype" src="https://github.com/user-attachments/assets/0778872a-8501-4b80-ad23-4cc88ffe86dd" />
+    </td>
+  </tr>
+</table>
+
 ReStock is a digital inventory-management product concept designed for small retailers who need a simple way to record stock, monitor sales, identify low-stock products, and create replenishment requests before stockouts occur.
 
 This repository contains the ReStock product portfolio, interactive product prototype, supporting business-model material, AI exploration assets, and academic case-study material for ITM Skills University.
