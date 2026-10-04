@@ -25,6 +25,7 @@ This repository contains the ReStock product portfolio, interactive product prot
 - Product Portfolio: https://yashhh710.github.io/restock-inventory-management/
 - Product Prototype: https://yashhh710.github.io/restock-inventory-management/main-product's-prototype/dashboard.html
 - Report: https://github.com/Yashhh710/restock-inventory-management/blob/main/report.pdf
+- PPT: https://github.com/Yashhh710/restock-inventory-management/blob/main/ppt.pdf
 
 ---
 
